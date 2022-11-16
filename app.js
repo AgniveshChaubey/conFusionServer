@@ -28,6 +28,8 @@ const url = config.mongoUrl;
 
 const connect = mongoose.connect(url);
 
+const uploadRouter = require('./routes/uploadRouter');
+
 connect.then((db) => {
     console.log("Connected correctly to server");
 }, (err) => { console.log(err); });
@@ -70,8 +72,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser('12345-67890-09876-54321'));
 
+// Secure traffic only
+app.all('*', (req, res, next) => {
+  if (req.secure) {
+    return next();
+  }
+  else {
+    res.redirect(307, 'https://' + req.hostname + ':' + app.get('secPort') + req.url);
+  }
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/imageUpload',uploadRouter);
 
 function auth (req, res, next) {
 
