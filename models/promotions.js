@@ -23,11 +23,7 @@ var promoSchema = new Schema({
         required: true,
         min: 0
     },
-    description: {
-        type: String,
-        required: true
-    },
-    featured: {
+       featured: {
         type: Boolean,
         required: fasle
     }
