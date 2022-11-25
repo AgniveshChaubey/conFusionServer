@@ -45,17 +45,17 @@ leaderRouter.route('/')
 leaderRouter.route('/:leaderId')
     .get((req, res, next) => {
         Leaders.findById(req.params.leaderId)
-            .then((leader) => {
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json(leader);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+        .then((leader) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(leader); 
+        }, (err) => next(err))
+        .catch((err) => next(err));
     })
-    .post((req, res, next) => {
-        res.statusCode = 403;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('POST operation not supported on /leaders/' + req.params.leaderId);
+        .post((req, res, next) => {
+            res.statusCode = 403;
+            res.setHeader('Content-Type', 'text/plain');
+            res.end('POST operation not supported on /leaders/' + req.params.leaderId);
     })
     .put((req, res, next) => {
         Leaders.findByIdAndUpdate(req.params.leaderId, {
